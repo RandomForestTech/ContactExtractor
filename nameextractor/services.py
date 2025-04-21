@@ -23,7 +23,6 @@ ROLE_KEYWORDS = ['ceo', 'cto', 'vp', 'president', 'officer', 'cfo', 'chief', 'he
 
 
 def extract_text_from_pdf(pdf_path, page_numbers):
-    print(pdf_path, "pdf_path")
     doc = fitz.open(pdf_path)
     text = ""
     for num in page_numbers:
@@ -36,7 +35,6 @@ def extract_entities_with_spacy_working_fine_basic(text):
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     people = []
     i = 0
-    print(lines, "lines123444")
     while i < len(lines):
         block_lines = []
 
@@ -89,7 +87,6 @@ def extract_entities_with_spacy_working_fine_basic(text):
 
 def extract_entities_with_spacy_and_contacts(text, used_indices=None, company_name=None):
     lines = [line.strip() for line in text.splitlines() if line.strip()]
-    print(lines, "lines123444")
     if used_indices is None:
         used_indices = set()
 
@@ -116,12 +113,9 @@ def extract_entities_with_spacy_and_contacts(text, used_indices=None, company_na
             for j in range(1, 4):  # Look ahead
                 if i + j < len(lines):
                     role_line = lines[i + j]
-                    print(role_line, "role_line")
                     role_words = role_line.split()
                     role_words = [word.lower() for word in role_words]
-                    print(role_words, "role_words")
                     if any(word in role_words for word in ROLE_KEYWORDS):
-                        print(role_line, "role_line1111")
                         role_lines.append(role_line)
                         role_line_indices.append(i + j)
                     else:
